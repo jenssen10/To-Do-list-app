@@ -1,0 +1,102 @@
+:root{
+	--bg:#f7f7fb;
+	--card:#ffffff;
+	--accent:#3b82f6;
+	--muted:#6b7280;
+	--radius:10px;
+	--max-width:720px;
+	--text:#0f172a;
+	--subtle:#64748b;
+	--elev: rgba(2,6,23,0.06);
+}
+
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* Smooth transitions for theme changes */
+*{transition: background-color 180ms ease, color 180ms ease, border-color 160ms ease}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);margin:0;padding:24px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+h1{margin:0 0 12px;font-size:20px;color:var(--text)}
+.app{width:100%;max-width:var(--max-width);background:var(--card);padding:20px;border-radius:var(--radius);box-shadow:0 6px 18px var(--elev)}
+h1{margin:0 0 12px;font-size:20px}
+.task-form{display:flex;gap:8px;margin-bottom:12px}
+#task-input{flex:1;padding:12px;border:1px solid #e6e9ef;border-radius:8px;font-size:15px}
+.task-form button{padding:10px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;box-shadow:0 4px 10px rgba(59,130,246,0.12)}
+.task-form button:focus,.task-form input:focus{outline:3px solid rgba(59,130,246,0.18);outline-offset:2px}
+.toolbar{display:flex;gap:12px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.toolbar select,.toolbar button{padding:8px;border-radius:8px;border:1px solid #e6e9ef;background:#fff}
+
+/* theme toggle */
+.theme-toggle{font-size:16px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:transparent;cursor:pointer}
+.theme-toggle[aria-pressed="true"]{background:linear-gradient(90deg,var(--accent),#7dd3fc);color:#05204a}
+
+/* Filter segmented control */
+.filter-group{display:inline-flex;background:transparent;border-radius:12px;overflow:hidden;border:1px solid rgba(15,23,42,0.04)}
+.filter-btn{appearance:none;border:0;background:transparent;padding:8px 12px;font-weight:600;color:var(--subtle);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.filter-btn .count{display:inline-block;min-width:22px;padding:2px 8px;border-radius:999px;background:rgba(0,0,0,0.04);font-weight:600;font-size:12px;color:var(--subtle)}
+.filter-btn.active{background:linear-gradient(90deg, rgba(59,130,246,0.12), rgba(125,211,252,0.06));color:var(--text)}
+.filter-btn:focus{outline:3px solid rgba(59,130,246,0.18);outline-offset:2px}
+
+.task-list{list-style:none;padding:0;margin:0}
+.task-item{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;border:1px solid #f0f2f6;margin-bottom:8px;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.2))}
+.task-item .label{flex:1}
+.task-item.completed .label{opacity:0.5;text-decoration:line-through}
+.actions button{background:transparent;border:none;cursor:pointer;color:var(--muted);padding:6px;font-size:16px}
+.actions button:focus{outline:2px solid rgba(0,0,0,0.08);border-radius:6px}
+.hint{font-size:13px;color:var(--muted);margin-top:12px}
+
+/* Move up/down buttons */
+.actions{display:flex;gap:8px;align-items:center}
+.move-btn{width:36px;height:36px;border-radius:8px;border:1px solid transparent;background:transparent;cursor:pointer;font-weight:700;color:var(--muted)}
+.move-btn:disabled{opacity:0.35;cursor:not-allowed}
+.move-btn:hover:not(:disabled){background:rgba(0,0,0,0.02)}
+.move-btn:focus{outline:3px solid rgba(59,130,246,0.12);outline-offset:2px}
+
+/* Visually hidden helper for accessibility */
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* Responsive tweaks */
+@media (max-width:600px){
+	body{padding:16px}
+	.app{padding:16px}
+	.task-form{flex-direction:column}
+	.task-form button{width:100%}
+	.toolbar{justify-content:space-between}
+	.task-item{padding:12px}
+}
+
+/* Drag & drop visuals */
+.task-item[draggable="true"]{cursor:grab}
+.task-item.dragging{opacity:0.5}
+.task-item.drag-over{border:2px dashed var(--accent);background:linear-gradient(180deg, rgba(59,130,246,0.03), transparent)}
+.task-item[draggable="false"]{cursor:default}
+
+/* Drag handle (affordance) */
+.drag-handle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;color:var(--muted);background:transparent;border:1px solid transparent;cursor:grab;font-size:18px}
+.drag-handle:active{cursor:grabbing}
+.drag-handle:focus{outline:3px solid rgba(59,130,246,0.18);outline-offset:2px}
+.task-item[draggable="false"] .drag-handle{opacity:0.35;cursor:default}
+
+/* place the handle left of the checkbox in small layout if needed */
+@media (max-width:600px){
+	.drag-handle{width:32px;height:32px;font-size:16px}
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark){
+	:root{ --bg:#0b1220; --card:#071025; --accent:#60a5fa; --muted:#9aa7bd; --text:#e6eef8; --subtle:#9aa7bd; --elev: rgba(2,6,23,0.5);} 
+}
+
+/* explicit dark theme when data-theme="dark" on <html> */
+html[data-theme="dark"]{
+	--bg:#0b1220; --card:#071025; --accent:#60a5fa; --muted:#9aa7bd; --text:#e6eef8; --subtle:#9aa7bd; --elev: rgba(2,6,23,0.5);
+}
+
+/* apply text colors */
+body, .label, .hint{color:var(--text)}
+.toolbar select, .toolbar button{background:transparent;color:var(--text);border-color:rgba(255,255,255,0.04)}
+
+
+
